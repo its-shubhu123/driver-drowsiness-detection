@@ -11,17 +11,16 @@ from sklearn.model_selection import train_test_split
 
 dataset_path = r"C:\Users\neera\OneDrive\Desktop\finalProject\train"  
 
-# Define image size and categories
-IMG_SIZE = (64, 64)  
-CATEGORIES = ["Closed_Eyes", "Open_Eyes"]  # Modify according to your dataset labels
 
-# Load images and labels
+IMG_SIZE = (64, 64)  
+CATEGORIES = ["Closed_Eyes", "Open_Eyes"] 
+
 data = []
 labels = []
 
 for category in CATEGORIES:
     path = os.path.join(dataset_path, category)
-    class_num = CATEGORIES.index(category)  # Assign numerical labels
+    class_num = CATEGORIES.index(category) 
 
     for img in os.listdir(path):
         try:
@@ -31,22 +30,19 @@ for category in CATEGORIES:
             labels.append(class_num)
         except Exception as e:
             print(f"Error loading image {img}: {e}")
-
-# Convert to NumPy arrays
-data = np.array(data).reshape(-1, IMG_SIZE[0], IMG_SIZE[1], 1)  # Add channel dimension
+            
+data = np.array(data).reshape(-1, IMG_SIZE[0], IMG_SIZE[1], 1) 
 labels = np.array(labels)
 
-# Normalize pixel values
 data = data / 255.0
 
-# Split into training and testing sets (80% training, 20% testing)
+# Spliting the data training and testing sets (80% training, 20% testing)
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
 
-# Print dataset shape
 print("Training data shape:", X_train.shape)
 print("Testing data shape:", X_test.shape)
 
-#build cnn model for it
+#building the cnn model 
 
 model = Sequential([
     Conv2D(32, (3,3), activation='relu', input_shape=(IMG_SIZE[0], IMG_SIZE[1], 1)),
@@ -63,10 +59,8 @@ model = Sequential([
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# Print model summary
 model.summary()
 
-#training the model
 history = model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test), batch_size=32)
 
 model.save("saved_model/drowsiness_model.h5")
@@ -74,4 +68,5 @@ print("Model saved successfully!")
 
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f"Test Accuracy: {test_acc * 100:.2f}%")
+
 
