@@ -29,6 +29,8 @@ A real-time AI-based system that detects driver drowsiness using computer vision
   - LSTM  
 
 ---
+## Model Link
+https://drive.google.com/drive/folders/1QAi0SfBaknUcPHHW-8Gon7ezpAS-4Jye?usp=drive_link
 
 ## Project Structure
 
@@ -37,9 +39,6 @@ Driver-Drowsiness-Detection/
 ├── dataset/
 │   ├── train/
 │   └── test/
-│
-├── models/
-│   └── model.h5
 │
 ├── src/
 │   ├── detect_drowsiness.py
